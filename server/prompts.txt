@@ -1,0 +1,2 @@
+Create a connect 4 game class. The class will have a method that will accept a row,col coordinate and make the play. ONce the tile is placed on the board it will detect if the player has won the game. the size of the board will be given as an argument when the class is instantiated.
+
