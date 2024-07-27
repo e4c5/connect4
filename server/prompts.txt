@@ -1,2 +1,9 @@
+# Prompts used to build the app
+
 Create a connect 4 game class. The class will have a method that will accept a row,col coordinate and make the play. ONce the tile is placed on the board it will detect if the player has won the game. the size of the board will be given as an argument when the class is instantiated.
 
+Nested methods can lead to confusion let's remove them please and simplify the class
+
+Shall we quickly write some unit tests for this class to get a decent amount of coverage?
+
+I now want to move the app secret out of this file into an environment variable that can perhaps be loaded through dotenv

@@ -19,7 +19,8 @@ class Connect4:
     def check_winner(self, row, col):
         directions = [(1, 0), (0, 1), (1, 1), (1, -1)]
         for r_step, c_step in directions:
-            if self.count_consecutive(row, col, r_step, c_step) + self.count_consecutive(row, col, -r_step, -c_step) - 1 >= 4:
+            if (self.count_consecutive(row, col, r_step, c_step) +
+                    self.count_consecutive(row, col, -r_step, -c_step) - 1 >= 4):
                 return True
         return False
 
