@@ -7,3 +7,5 @@ Nested methods can lead to confusion let's remove them please and simplify the c
 Shall we quickly write some unit tests for this class to get a decent amount of coverage?
 
 I now want to move the app secret out of this file into an environment variable that can perhaps be loaded through dotenv
+
+In order to make it possible to write a frontend for this in either react or angular it will be required to display the board, for that it will be required to send the board back with each response.
