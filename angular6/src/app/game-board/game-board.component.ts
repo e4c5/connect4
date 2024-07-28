@@ -14,13 +14,15 @@ export class GameBoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.boardLoaded$.subscribe(data => {
-      this.board = data.board;
-      this.playing = data.playing;
+      if(data) {
+        this.board = data.board;
+        this.playing = data.playing;
+      }
     });
   }
 
   makeMove(column: number): void {
-    if(! this.playing ) {
+    if (!this.playing) {
       console.error("game over");
       return;
     }
@@ -28,6 +30,9 @@ export class GameBoardComponent implements OnInit {
       data => {
         this.board = data.board;
         this.playing = data.playing;
+        if (!data.playing) {
+          this.gameService.setGameStatus(data.message);
+        }
       },
       error => {
         console.error('Error making move:', error);

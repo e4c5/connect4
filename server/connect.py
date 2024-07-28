@@ -56,7 +56,7 @@ class Connect4:
         if not (0 <= col < self.cols):
             raise ValueError("Move out of bounds")
 
-        for row in range(self.rows):
+        for row in range(self.rows - 1, -1, -1):
             if self.board[row][col] == 0:
                 self.board[row][col] = self.current_player
                 if self.check_winner(row, col):

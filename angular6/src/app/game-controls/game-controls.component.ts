@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 
 @Component({
@@ -6,16 +6,20 @@ import { GameService } from '../game.service';
   templateUrl: './game-controls.component.html',
   styleUrls: ['./game-controls.component.css']
 })
-export class GameControlsComponent {
+export class GameControlsComponent implements OnInit {
   gameStatus: string | null = null;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
     this.gameService.boardLoaded$.subscribe(data => {
-      if(! data.playing ) {
+      if (data && !data.playing) {
         this.gameStatus = "Game Over";
       }
+    });
+
+    this.gameService.gameStatus$.subscribe(status => {
+      this.gameStatus = status;
     });
   }
 

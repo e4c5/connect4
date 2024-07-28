@@ -1,5 +1,5 @@
 <table *ngIf="board" class="board">
-  <tr *ngFor="let row of board.slice().reverse(); let rowIndex = index">
+  <tr *ngFor="let row of board; let rowIndex = index">
     <td *ngFor="let cell of row; let colIndex = index" class="cell" (click)="makeMove(colIndex)">
       <span *ngIf="cell === 0"></span>
       <span *ngIf="cell === 1" class="player1"></span>
