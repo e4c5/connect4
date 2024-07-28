@@ -1,0 +1,1 @@
+So this project is intended to be a frontend for a connect 4 game that i am developing the game is hosted by a flask application and the client will send moves to the server and display the board. Can you help me generate the starting code for this application and  replace the default home page with this generated code

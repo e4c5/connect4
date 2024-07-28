@@ -1,0 +1,8 @@
+<!-- game-board.component.html -->
+<div *ngIf="board">
+  <div *ngFor="let row of board">
+    <div *ngFor="let cell of row" (click)="makeMove(cell.column)">
+      {{ cell.value }}
+    </div>
+  </div>
+</div>
