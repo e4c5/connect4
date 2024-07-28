@@ -1,2 +1,6 @@
-<button (click)="startGame()">Start Game</button>
+<div class="controls">
+  <button (click)="startGame()">Start Game</button>
+  <button (click)="resignGame()">Resign Game</button>
+</div>
+<div class="status" *ngIf="gameStatus">{{ gameStatus }}</div>
 <app-game-board></app-game-board>

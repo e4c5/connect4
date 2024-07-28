@@ -23,3 +23,9 @@ Instead of starting the game automatically when the page is loaded lets give a b
 But it seems that the child is not being initialized. Can you look at the context and figure out why that is so
 -- this got things mostly back on track. Here all the files were given as context earlier prompts also
 -- had several files as context
+
+Instead of displaying numbers 1 and 2, can we have it that we draw a nicely colored blue circle for player 1 and a nicely colored red circle for player 2?
+
+Lets style this page nicely. The board needs to be centered both horizontally and vertically. The start game button should have a resign button as well next to it. We also need a place to display when the game has ended either because the board is full or one or the other players have won it.
+-- at this point things got wonky again and manual intervention was required.
+

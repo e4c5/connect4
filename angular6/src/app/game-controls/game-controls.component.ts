@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameService } from '../game.service';
 
 @Component({
@@ -6,13 +6,25 @@ import { GameService } from '../game.service';
   templateUrl: './game-controls.component.html',
   styleUrls: ['./game-controls.component.css']
 })
-export class GameControlsComponent implements OnInit {
+export class GameControlsComponent {
+  gameStatus: string | null = null;
+
   constructor(private gameService: GameService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.gameService.boardLoaded$.subscribe(data => {
+      if(! data.playing ) {
+        this.gameStatus = "Game Over";
+      }
+    });
   }
 
   startGame(): void {
     this.gameService.loadBoard();
+    this.gameStatus = null;
+  }
+
+  resignGame(): void {
+    this.gameStatus = 'Game resigned. Player has left the game.';
   }
 }
