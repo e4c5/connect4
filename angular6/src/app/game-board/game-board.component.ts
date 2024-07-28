@@ -16,4 +16,15 @@ export class GameBoardComponent implements OnInit {
       this.board = data.board;
     });
   }
+
+  makeMove(column: number): void {
+    this.gameService.makeMove(column).subscribe(
+      data => {
+        this.board = data.board;
+      },
+      error => {
+        console.error('Error making move:', error);
+      }
+    );
+  }
 }
