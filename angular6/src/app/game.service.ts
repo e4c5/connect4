@@ -1,4 +1,3 @@
-// game.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GameService {
-  private apiUrl = 'http://localhost:5000/api'; // Adjust the URL as needed
+  private apiUrl = 'http://localhost:5000/'; // Adjust the URL as needed
 
   constructor(private http: HttpClient) {}
 
   getBoard(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/board`);
+    return this.http.get(`${this.apiUrl}/start/`, { withCredentials: true });
   }
 
   makeMove(column: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/move`, { column });
+    return this.http.post(`${this.apiUrl}/move/`, { column }, { withCredentials: true });
   }
 }

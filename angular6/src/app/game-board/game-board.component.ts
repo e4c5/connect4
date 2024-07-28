@@ -18,7 +18,7 @@ export class GameBoardComponent implements OnInit {
 
   loadBoard(): void {
     this.gameService.getBoard().subscribe(data => {
-      this.board = data;
+      this.board = data.board;
     });
   }
 

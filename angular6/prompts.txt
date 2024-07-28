@@ -1,1 +1,9 @@
 So this project is intended to be a frontend for a connect 4 game that i am developing the game is hosted by a flask application and the client will send moves to the server and display the board. Can you help me generate the starting code for this application and  replace the default home page with this generated code
+
+so the backend sends the board in the format of a nested array that looks like {"board": [ [0,0,0 ..], [0,0,0, ..] .. ] here there each child array will represent a row and in each row th number 0 means it's unoccupied and number 1 means it has a token belonging to player 1 while number 2 means a token belonging to player two.
+
+Looking a lot better but it does not look like a grid. Connect 4 as you know is played on a board. Shall we use an html table for this?
+
+So the server is not behaving properly because we are apparently not sending the cookies to the server. How can that be changed
+
+But now that leads to another cors error even though i have flask cors enabled and installed on my server
