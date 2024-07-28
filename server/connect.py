@@ -165,7 +165,7 @@ class Connect4:
         """
         data = {
             "board": self.board,
-            "status": self.playing
+            "playing": self.playing
         }
 
         if self.winner:

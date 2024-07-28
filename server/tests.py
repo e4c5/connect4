@@ -1,6 +1,7 @@
 import unittest
 from connect import Connect4
 
+
 class TestConnect4(unittest.TestCase):
     def setUp(self):
         self.game = Connect4()
@@ -13,7 +14,7 @@ class TestConnect4(unittest.TestCase):
     def test_make_valid_play(self):
         self.game.make_play(0)
 
-        self.assertEqual(self.game.playing, True)
+        self.assertTrue(self.game.playing)
         self.assertEqual(self.game.board[0][0], 1)
 
     def test_make_play_out_of_bounds(self):
@@ -43,7 +44,7 @@ class TestConnect4(unittest.TestCase):
     def assertWin(self):
         data = self.game.to_json()
         self.assertEqual(data['message'], "Player 1 wins!")
-        self.assertEqual(data['status'], 0)
+        self.assertEqual(data['playing'], 0)
 
     def test_diagonal_win_bottom_right(self):
         for i in range(3):

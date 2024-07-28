@@ -25,7 +25,7 @@ def start_game():
     game = Connect4(rows, cols)
     session['game'] = pickle.dumps(game)
     session['game_mode'] = game_mode
-    return jsonify(game.to_json("Game started", 1))
+    return jsonify(game.to_json())
 
 @app.route('/move/', methods=['POST'])
 def make_play():
@@ -36,14 +36,14 @@ def make_play():
     game_mode = session['game_mode']
     col = request.json['column']
     try:
-        result, status = game.make_play(col)
+        game.make_play(col)
         session['game'] = pickle.dumps(game)
-        response = game.to_json(result, status)
+        response = game.to_json()
 
-        if game_mode == 'human_vs_ai' and status == 1:
-            ai_result, ai_status = game.make_ai_move()
+        if game_mode == 'human_vs_ai' and game.playing:
+            game.make_ai_move()
             session['game'] = pickle.dumps(game)
-            response = game.to_json(ai_result, ai_status)
+            response = game.to_json()
 
         return jsonify(response)
     except ValueError as e:
