@@ -15,3 +15,4 @@ Now are going to expand the app.py to take an additional parameter that decides 
 Currently the respons when one of the players wins is to add a message field to the json. It's done in a messy way though. Can we improve on it and do things in a such a way that we return in addition to the board, a "status" field 0 for game over 1 for game ongoing and the message field
 
 It would be cleaner code if we had a method in the connect4 class that produced the json and returned it rather than doing it in app.py
+-- the AI's handling of game status was nto entirely satisfactory and manual intervention was needed.

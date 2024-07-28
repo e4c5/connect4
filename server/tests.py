@@ -1,7 +1,6 @@
 import unittest
 from connect import Connect4
 
-
 class TestConnect4(unittest.TestCase):
     def setUp(self):
         self.game = Connect4()
@@ -12,46 +11,54 @@ class TestConnect4(unittest.TestCase):
         self.assertEqual(self.game.current_player, 1)
 
     def test_make_valid_play(self):
-        result = self.game.make_play(0, 0)
-        self.assertEqual(result, "Move accepted")
+        self.game.make_play(0)
+
+        self.assertEqual(self.game.playing, True)
         self.assertEqual(self.game.board[0][0], 1)
 
     def test_make_play_out_of_bounds(self):
         with self.assertRaises(ValueError):
-            self.game.make_play(6, 0)
+            self.game.make_play(7)
 
-    def test_make_play_cell_occupied(self):
-        self.game.make_play(0, 0)
+    def test_make_play_column_full(self):
+        for _ in range(6):
+            self.game.make_play(0)
         with self.assertRaises(ValueError):
-            self.game.make_play(0, 0)
+            self.game.make_play(0)
 
     def test_horizontal_win(self):
         for col in range(3):
-            self.game.make_play(0, col)
+            self.game.make_play(col)
             self.game.current_player = 1  # Force player 1's turn
-        result = self.game.make_play(0, 3)
-        self.assertEqual(result, "Player 1 wins!")
+        self.game.make_play(3)
+        self.assertWin()
 
     def test_vertical_win(self):
-        for row in range(3):
-            self.game.make_play(row, 0)
+        for _ in range(3):
+            self.game.make_play(0)
             self.game.current_player = 1  # Force player 1's turn
-        result = self.game.make_play(3, 0)
-        self.assertEqual(result, "Player 1 wins!")
+        self.game.make_play(0)
+        self.assertWin()
+
+    def assertWin(self):
+        data = self.game.to_json()
+        self.assertEqual(data['message'], "Player 1 wins!")
+        self.assertEqual(data['status'], 0)
 
     def test_diagonal_win_bottom_right(self):
         for i in range(3):
-            self.game.make_play(i, i)
+            self.game.make_play(i)
             self.game.current_player = 1  # Force player 1's turn
-        result = self.game.make_play(3, 3)
-        self.assertEqual(result, "Player 1 wins!")
+        self.game.make_play(3)
+
 
     def test_diagonal_win_bottom_left(self):
         for i in range(3):
-            self.game.make_play(i, 3 - i)
+            self.game.make_play(3 - i)
             self.game.current_player = 1  # Force player 1's turn
-        result = self.game.make_play(3, 0)
-        self.assertEqual(result, "Player 1 wins!")
+        self.game.make_play(0)
+        self.assertWin()
+
 
 if __name__ == '__main__':
     unittest.main()
