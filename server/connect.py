@@ -1,3 +1,5 @@
+import random
+
 class Connect4:
     def __init__(self, rows=6, cols=7):
         self.rows = rows
@@ -9,16 +11,22 @@ class Connect4:
         if not (0 <= col < self.cols):
             raise ValueError("Move out of bounds")
 
-        # Find the first empty row in the specified column
         for row in range(self.rows):
             if self.board[row][col] == 0:
                 self.board[row][col] = self.current_player
                 if self.check_winner(row, col):
-                    return f"Player {self.current_player} wins!"
-                self.current_player = 3 - self.current_player  # Switch player
-                return "Move accepted"
+                    return f"Player {self.current_player} wins!", 0
+                self.current_player = 3 - self.current_player
+                return "Move accepted", 1
 
         raise ValueError("Column is full")
+
+    def make_ai_move(self):
+        available_cols = [col for col in range(self.cols) if self.board[0][col] == 0]
+        if not available_cols:
+            raise ValueError("No valid moves available for AI")
+        col = random.choice(available_cols)
+        return self.make_play(col)
 
     def check_winner(self, row, col):
         directions = [(1, 0), (0, 1), (1, 1), (1, -1)]
@@ -36,3 +44,10 @@ class Connect4:
             r += r_step
             c += c_step
         return count
+
+    def to_json(self, message, status):
+        return {
+            "message": message,
+            "board": self.board,
+            "status": status
+        }

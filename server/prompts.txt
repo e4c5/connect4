@@ -9,3 +9,9 @@ Shall we quickly write some unit tests for this class to get a decent amount of 
 I now want to move the app secret out of this file into an environment variable that can perhaps be loaded through dotenv
 
 In order to make it possible to write a frontend for this in either react or angular it will be required to display the board, for that it will be required to send the board back with each response.
+
+Now are going to expand the app.py to take an additional parameter that decides if the playing is going to be two player mode or player vs computer. The default will be human vs ai. If a parameter is passed we will be switching to human vs human. The current implementation is two player.
+
+Currently the respons when one of the players wins is to add a message field to the json. It's done in a messy way though. Can we improve on it and do things in a such a way that we return in addition to the board, a "status" field 0 for game over 1 for game ongoing and the message field
+
+It would be cleaner code if we had a method in the connect4 class that produced the json and returned it rather than doing it in app.py

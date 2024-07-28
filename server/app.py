@@ -17,12 +17,15 @@ def start_game():
     if request.method == 'POST':
         rows = request.json.get('rows', 6)
         cols = request.json.get('cols', 7)
+        game_mode = request.json.get('game_mode', 'human_vs_ai')
     else:
         rows = 6
         cols = 7
+        game_mode = 'human_vs_ai'
     game = Connect4(rows, cols)
     session['game'] = pickle.dumps(game)
-    return jsonify({"message": "Game started", "rows": rows, "cols": cols, "board": game.board})
+    session['game_mode'] = game_mode
+    return jsonify(game.to_json("Game started", 1))
 
 @app.route('/move/', methods=['POST'])
 def make_play():
@@ -30,11 +33,19 @@ def make_play():
         return jsonify({"error": "No game in progress"}), 400
 
     game = pickle.loads(session['game'])
+    game_mode = session['game_mode']
     col = request.json['column']
     try:
-        result = game.make_play(col)
+        result, status = game.make_play(col)
         session['game'] = pickle.dumps(game)
-        return jsonify({"message": result, "board": game.board})
+        response = game.to_json(result, status)
+
+        if game_mode == 'human_vs_ai' and status == 1:
+            ai_result, ai_status = game.make_ai_move()
+            session['game'] = pickle.dumps(game)
+            response = game.to_json(ai_result, ai_status)
+
+        return jsonify(response)
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
