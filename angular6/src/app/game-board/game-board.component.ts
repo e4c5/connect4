@@ -1,4 +1,3 @@
-// game-board.component.ts
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 
@@ -8,7 +7,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./game-board.component.css']
 })
 export class GameBoardComponent implements OnInit {
-  board: any;
+  board: number[][];
 
   constructor(private gameService: GameService) {}
 
@@ -23,8 +22,9 @@ export class GameBoardComponent implements OnInit {
   }
 
   makeMove(column: number): void {
-    this.gameService.makeMove(column).subscribe(() => {
-      this.loadBoard();
+    this.gameService.makeMove(column).subscribe(response => {
+      // Update the board state directly based on the response
+      this.board = response.board;
     });
   }
 }

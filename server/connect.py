@@ -5,16 +5,20 @@ class Connect4:
         self.board = [[0 for _ in range(cols)] for _ in range(rows)]
         self.current_player = 1
 
-    def make_play(self, row, col):
-        if not (0 <= row < self.rows and 0 <= col < self.cols):
+    def make_play(self, col):
+        if not (0 <= col < self.cols):
             raise ValueError("Move out of bounds")
-        if self.board[row][col] != 0:
-            raise ValueError("Cell is already occupied")
-        self.board[row][col] = self.current_player
-        if self.check_winner(row, col):
-            return f"Player {self.current_player} wins!"
-        self.current_player = 3 - self.current_player  # Switch player
-        return "Move accepted"
+
+        # Find the first empty row in the specified column
+        for row in range(self.rows):
+            if self.board[row][col] == 0:
+                self.board[row][col] = self.current_player
+                if self.check_winner(row, col):
+                    return f"Player {self.current_player} wins!"
+                self.current_player = 3 - self.current_player  # Switch player
+                return "Move accepted"
+
+        raise ValueError("Column is full")
 
     def check_winner(self, row, col):
         directions = [(1, 0), (0, 1), (1, 1), (1, -1)]

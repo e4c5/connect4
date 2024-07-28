@@ -1,4 +1,3 @@
-# app.py
 import pickle
 import os
 from flask import Flask, session, request, jsonify
@@ -31,10 +30,9 @@ def make_play():
         return jsonify({"error": "No game in progress"}), 400
 
     game = pickle.loads(session['game'])
-    row = request.json['row']
-    col = request.json['col']
+    col = request.json['column']
     try:
-        result = game.make_play(row, col)
+        result = game.make_play(col)
         session['game'] = pickle.dumps(game)
         return jsonify({"message": result, "board": game.board})
     except ValueError as e:

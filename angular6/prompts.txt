@@ -7,3 +7,9 @@ Looking a lot better but it does not look like a grid. Connect 4 as you know is 
 So the server is not behaving properly because we are apparently not sending the cookies to the server. How can that be changed
 
 But now that leads to another cors error even though i have flask cors enabled and installed on my server
+
+The way the code is written currently, when the user clicks on a cell the backend api is called and the response is recieved. However immiediately afterwards another request is send to the /start/ endpoint why does this happen and how can we stop it
+
+Now the board is being displayed but it's upside down. In conenct for row 0 is towards the bottom of the page. In other words the columns need to start filling up from the bottom of the screen to the top, how can we achieve it
+
+Can we do the reversing only at the time of display? We are going to have to implement an auto play functionality later on and that code will be harder to write if we reverse IMHO
