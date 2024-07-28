@@ -13,3 +13,9 @@ The way the code is written currently, when the user clicks on a cell the backen
 Now the board is being displayed but it's upside down. In conenct for row 0 is towards the bottom of the page. In other words the columns need to start filling up from the bottom of the screen to the top, how can we achieve it
 
 Can we do the reversing only at the time of display? We are going to have to implement an auto play functionality later on and that code will be harder to write if we reverse IMHO
+
+Now the backend has changed by default to be player vs computer. So instead of just calling the start method when the application loads we need to present a button to the user to start the game. He also needs to have an option of choosing whether it's player vs player or player vs computer mode.
+-- the above was filtered out as it matched open source codes
+
+Instead of starting the game automatically when the page is loaded lets give a button to start the game manually
+-- here things went wonky i had to do a lot of manual edits to the code to get things back on track

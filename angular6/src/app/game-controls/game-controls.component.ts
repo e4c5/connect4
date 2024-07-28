@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameBoardComponent } from '../game-board/game-board.component';
 
 @Component({
   selector: 'app-game-controls',
@@ -12,4 +13,7 @@ export class GameControlsComponent implements OnInit {
   ngOnInit() {
   }
 
+  startGame(): void {
+   
+  }
 }

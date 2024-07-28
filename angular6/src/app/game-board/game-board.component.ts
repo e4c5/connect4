@@ -7,12 +7,12 @@ import { GameService } from '../game.service';
   styleUrls: ['./game-board.component.css']
 })
 export class GameBoardComponent implements OnInit {
-  board: number[][];
+  board: number[][] | null = null;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.loadBoard();
+    // Do not load the board automatically
   }
 
   loadBoard(): void {
@@ -23,7 +23,6 @@ export class GameBoardComponent implements OnInit {
 
   makeMove(column: number): void {
     this.gameService.makeMove(column).subscribe(response => {
-      // Update the board state directly based on the response
       this.board = response.board;
     });
   }
