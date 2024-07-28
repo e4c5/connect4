@@ -19,3 +19,7 @@ Now the backend has changed by default to be player vs computer. So instead of j
 
 Instead of starting the game automatically when the page is loaded lets give a button to start the game manually
 -- here things went wonky i had to do a lot of manual edits to the code to get things back on track
+
+But it seems that the child is not being initialized. Can you look at the context and figure out why that is so
+-- this got things mostly back on track. Here all the files were given as context earlier prompts also
+-- had several files as context

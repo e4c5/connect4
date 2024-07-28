@@ -12,18 +12,8 @@ export class GameBoardComponent implements OnInit {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    // Do not load the board automatically
-  }
-
-  loadBoard(): void {
-    this.gameService.getBoard().subscribe(data => {
+    this.gameService.boardLoaded$.subscribe(data => {
       this.board = data.board;
-    });
-  }
-
-  makeMove(column: number): void {
-    this.gameService.makeMove(column).subscribe(response => {
-      this.board = response.board;
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameBoardComponent } from '../game-board/game-board.component';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game-controls',
@@ -7,13 +7,12 @@ import { GameBoardComponent } from '../game-board/game-board.component';
   styleUrls: ['./game-controls.component.css']
 })
 export class GameControlsComponent implements OnInit {
-
-  constructor() { }
+  constructor(private gameService: GameService) {}
 
   ngOnInit() {
   }
 
   startGame(): void {
-   
+    this.gameService.loadBoard();
   }
 }
