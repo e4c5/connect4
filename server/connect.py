@@ -1,5 +1,8 @@
 import random
 
+from serializers import JsonSerializationStrategy
+
+
 class Connect4:
     """
     A class to represent a Connect4 game.
@@ -34,6 +37,10 @@ class Connect4:
         self.current_player = 1
         self.playing = True
         self.winner = 0
+        self.serialization_strategy = JsonSerializationStrategy()  # Default strategy
+
+    def set_serialization_strategy(self, strategy):
+        self.serialization_strategy = strategy
 
     def make_play(self, col):
         """
@@ -147,7 +154,7 @@ class Connect4:
             c += c_step
         return count
 
-    def to_json(self):
+    def get_game_state(self):
         """
         Returns the game state as a JSON-compatible dictionary.
 
@@ -175,3 +182,6 @@ class Connect4:
             data["message"] = "Game over"
 
         return data
+
+    def serialize(self):
+        return self.serialization_strategy.serialize(self.get_game_state())

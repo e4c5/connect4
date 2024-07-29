@@ -1,8 +1,20 @@
 syntax = "proto3";
 
+message Board {
+  repeated Row rows = 5;
+}
+
+message Row {
+  repeated int32 cols = 6;
+}
+
 message Connect4State {
   repeated int32 board = 1;
   bool playing = 2;
   int32 winner = 3;
   string message = 4;
+}
+
+message Error {
+  string message = 7;
 }
