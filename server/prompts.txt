@@ -16,3 +16,6 @@ Currently the respons when one of the players wins is to add a message field to 
 
 It would be cleaner code if we had a method in the connect4 class that produced the json and returned it rather than doing it in app.py
 -- the AI's handling of game status was nto entirely satisfactory and manual intervention was needed.
+-- quite a few manual fixing was done by the time we got to commit hash f7a839e3ea39250d562444980437795cc3d4df1a
+
+So lets add support for protobuf into this project. I want to produce the game state as protobuf rather than json

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Connect4State {
+  repeated int32 board = 1;
+  bool playing = 2;
+  int32 winner = 3;
+  string message = 4;
+}
