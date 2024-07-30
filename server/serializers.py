@@ -1,6 +1,10 @@
 import json
 import msgpack
 import connect4_pb2
+import avro.schema
+import avro.io
+import io
+
 
 class SerializationStrategy:
     def serialize(self, game_state):
@@ -8,13 +12,38 @@ class SerializationStrategy:
         pass
 
 
+class AvroSerializationStrategy(SerializationStrategy):
+    schema_str = """
+    {
+        "type": "record",
+        "name": "Connect4State",
+        "fields": [
+            {"name": "board", "type": {"type": "array", "items": "int"}},
+            {"name": "playing", "type": "boolean"},
+            {"name": "winner", "type": ["null", "int"], "default": null},
+            {"name": "message", "type": ["null", "string"], "default": null}
+        ]
+    }
+    """
+    schema = avro.schema.parse(schema_str)
+
+    def serialize(self, game_state):
+        writer = avro.io.DatumWriter(self.schema)
+        bytes_writer = io.BytesIO()
+        encoder = avro.io.BinaryEncoder(bytes_writer)
+        writer.write(game_state, encoder)
+        return bytes_writer.getvalue()
+
+
 class JsonSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         return json.dumps(game_state)
 
+
 class MessagePackSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         return msgpack.packb(game_state)
+
 
 class ProtobufSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
