@@ -32,4 +32,7 @@ Lets style this page nicely. The board needs to be centered both horizontally an
 
 This game-board.component.spec was written long ago, now the game-board.component has changed a lot since that time. Can we update the test to reflect the current version of the component
 -- again things got wonky
+-- after a bit of manual work
 
+Given this protobuf file can we change our game.service so that it can handle server responses in either json or protobuf? We can continue to post the moves in json but we want to be able to recieve the response in protobuf or json. That would involve sending the accept http header. We need to determine whcih accept header to send based on a query string parameter passed to the main page of our angular ap
+-- where the protobuf file was given as context

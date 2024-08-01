@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Connect4State } from './connect4_pb';
 
 /**
  * Service responsible for managing game-related operations.
@@ -36,12 +38,30 @@ export class GameService {
    */
   constructor(private http: HttpClient) {}
 
+  private getAcceptHeader(): string {
+    const urlParams = new URLSearchParams(window.location.search);
+    const responseType = urlParams.get('responseType');
+    return responseType === 'protobuf' ? 'application/x-protobuf' : 'application/json';
+  }
+
+  private parseResponse(response: any, responseType: string): any {
+    if (responseType === 'application/x-protobuf') {
+      return Connect4State.deserializeBinary(new Uint8Array(response));
+    }
+    return response;
+  }
+
   /**
    * Retrieves the game board from the backend.
    * @returns An Observable that emits the game board data.
    */
   getBoard(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/start/`, { withCredentials: true });
+    const headers = new HttpHeaders({
+      'Accept': this.getAcceptHeader()
+    });
+    return this.http.get(`${this.apiUrl}/start/`, { headers, responseType: 'arraybuffer' }).pipe(
+      map(response => this.parseResponse(response, headers.get('Accept')!))
+    );
   }
 
   /**
@@ -60,7 +80,12 @@ export class GameService {
    * @returns An Observable that emits the result of the move.
    */
   makeMove(column: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/move/`, { column }, { withCredentials: true });
+    const headers = new HttpHeaders({
+      'Accept': this.getAcceptHeader()
+    });
+    return this.http.post(`${this.apiUrl}/move/`, { column }, { headers, responseType: 'arraybuffer' }).pipe(
+      map(response => this.parseResponse(response, headers.get('Accept')!))
+    );
   }
 
   /**
