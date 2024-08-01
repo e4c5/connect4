@@ -33,7 +33,7 @@ def get_response_format():
         return 'protobuf'
     elif APPLICATION_X_MSGPACK in accept_header:
         return 'messagepack'
-    elif ('%s' % APPLICATION_X_AVRO) in accept_header:
+    elif APPLICATION_X_AVRO in accept_header:
         return 'avro'
     return 'json'
 
