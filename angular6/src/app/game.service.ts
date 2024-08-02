@@ -46,9 +46,15 @@ export class GameService {
 
   private parseResponse(response: any, responseType: string): any {
     if (responseType === 'application/x-protobuf') {
-      return Connect4State.deserializeBinary(new Uint8Array(response));
+      const object = Connect4State.deserializeBinary(new Uint8Array(response)).toObject()
+      // this should not be needed but protoc keeps giving the name as boardList
+      object.board = object.boardList.map(row => row.colsList);
+      delete object.boardList;
+      console.log(object)
+      return object
     }
-    return response;
+    console.log(new TextDecoder().decode(response))
+    return JSON.parse(new TextDecoder().decode(response));
   }
 
   /**
@@ -59,7 +65,7 @@ export class GameService {
     const headers = new HttpHeaders({
       'Accept': this.getAcceptHeader()
     });
-    return this.http.get(`${this.apiUrl}/start/`, { headers, responseType: 'arraybuffer' }).pipe(
+    return this.http.get(`${this.apiUrl}/start/`, { headers, responseType: 'arraybuffer' , withCredentials: true}).pipe(
       map(response => this.parseResponse(response, headers.get('Accept')!))
     );
   }
@@ -83,7 +89,8 @@ export class GameService {
     const headers = new HttpHeaders({
       'Accept': this.getAcceptHeader()
     });
-    return this.http.post(`${this.apiUrl}/move/`, { column }, { headers, responseType: 'arraybuffer' }).pipe(
+    return this.http.post(`${this.apiUrl}/move/`, { column },
+      { headers, responseType: 'arraybuffer', withCredentials: true }).pipe(
       map(response => this.parseResponse(response, headers.get('Accept')!))
     );
   }
