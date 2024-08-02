@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Connect4State } from './connect4_pb';
-
+import * as avro from 'avro-js';
 /**
  * Service responsible for managing game-related operations.
  * Provides methods to interact with the game backend and manage game state.
@@ -41,7 +41,12 @@ export class GameService {
   private getAcceptHeader(): string {
     const urlParams = new URLSearchParams(window.location.search);
     const responseType = urlParams.get('responseType');
-    return responseType === 'protobuf' ? 'application/x-protobuf' : 'application/json';
+    if (responseType === 'protobuf') {
+      return 'application/x-protobuf';
+    } else if (responseType === 'avro') {
+      return 'application/avro';
+    }
+    return 'application/json';
   }
 
   private parseResponse(response: any, responseType: string): any {
@@ -50,10 +55,22 @@ export class GameService {
       // this should not be needed but protoc keeps giving the name as boardList
       object.board = object.boardList.map(row => row.colsList);
       delete object.boardList;
-      console.log(object)
       return object
+
+    } else if (responseType === 'application/avro') {
+      const avroSchema = avro.parse({
+        type: 'record',
+        name: 'Connect4State',
+        fields: [
+          { name: 'board', type: { type: 'array', items: {type: "array", items: 'int'} } },
+          { name: 'playing', type: 'boolean' },
+          { name: 'winner', type: ['null', 'int'], default: null },
+          { name: 'message', type: ['null', 'string'], default: null }
+        ]
+      });
+      return avroSchema.fromBuffer(new Uint8Array(response));
     }
-    console.log(new TextDecoder().decode(response))
+
     return JSON.parse(new TextDecoder().decode(response));
   }
 
