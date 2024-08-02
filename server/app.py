@@ -15,7 +15,7 @@ COLUMNS = 7
 
 ROWS = 6
 
-APPLICATION_X_AVRO = 'application/x-avro'
+APPLICATION_X_AVRO = 'application/avro'
 APPLICATION_X_MSGPACK = 'application/x-msgpack'
 APPLICATION_X_PROTOBUF = 'application/x-protobuf'
 

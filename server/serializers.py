@@ -5,27 +5,15 @@ import avro.schema
 import avro.io
 import io
 
-
 class SerializationStrategy:
     def serialize(self, game_state):
         """Intended to be overridden by subclasses."""
         pass
 
-
 class AvroSerializationStrategy(SerializationStrategy):
-    schema_str = """
-    {
-        "type": "record",
-        "name": "Connect4State",
-        "fields": [
-            {"name": "board", "type": {"type": "array", "items": "int"}},
-            {"name": "playing", "type": "boolean"},
-            {"name": "winner", "type": ["null", "int"], "default": null},
-            {"name": "message", "type": ["null", "string"], "default": null}
-        ]
-    }
-    """
-    schema = avro.schema.parse(schema_str)
+    def __init__(self):
+        with open('connect4.avsc', 'r') as schema_file:
+            self.schema = avro.schema.parse(schema_file.read())
 
     def serialize(self, game_state):
         writer = avro.io.DatumWriter(self.schema)
@@ -34,16 +22,13 @@ class AvroSerializationStrategy(SerializationStrategy):
         writer.write(game_state, encoder)
         return bytes_writer.getvalue()
 
-
 class JsonSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         return json.dumps(game_state)
 
-
 class MessagePackSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         return msgpack.packb(game_state)
-
 
 class ProtobufSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):

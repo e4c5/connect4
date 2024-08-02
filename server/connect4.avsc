@@ -1,0 +1,19 @@
+{
+    "type": "record",
+    "name": "Connect4State",
+    "fields": [
+        {
+            "name": "board",
+            "type": {
+                "type": "array",
+                "items": {
+                    "type": "array",
+                    "items": "int"
+                }
+            }
+        },
+        {"name": "playing", "type": "boolean"},
+        {"name": "winner", "type": ["null", "int"], "default": null},
+        {"name": "message", "type": ["null", "string"], "default": null}
+    ]
+}
