@@ -28,6 +28,7 @@
     "global": "^4.4.0",
     "google-protobuf": "^3.21.4",
     "karma-coverage": "^2.2.1",
+    "msgpack5": "^6.0.2",
     "protobufjs": "^7.3.2",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"

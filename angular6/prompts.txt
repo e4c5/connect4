@@ -36,3 +36,7 @@ This game-board.component.spec was written long ago, now the game-board.componen
 
 Given this protobuf file can we change our game.service so that it can handle server responses in either json or protobuf? We can continue to post the moves in json but we want to be able to recieve the response in protobuf or json. That would involve sending the accept http header. We need to determine whcih accept header to send based on a query string parameter passed to the main page of our angular ap
 -- where the protobuf file was given as context
+
+-- few things skipped
+
+now it's time to add messagePack support

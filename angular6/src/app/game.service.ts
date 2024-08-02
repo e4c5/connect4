@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Connect4State } from './connect4_pb';
 import * as avro from 'avro-js';
+import * as msgpack from 'msgpack5';
+
 /**
  * Service responsible for managing game-related operations.
  * Provides methods to interact with the game backend and manage game state.
@@ -45,6 +47,8 @@ export class GameService {
       return 'application/x-protobuf';
     } else if (responseType === 'avro') {
       return 'application/avro';
+    } else if (responseType === 'msgpack') {
+      return 'application/x-msgpack';
     }
     return 'application/json';
   }
@@ -69,7 +73,11 @@ export class GameService {
         ]
       });
       return avroSchema.fromBuffer(new Uint8Array(response));
+    } else if (responseType === 'application/x-msgpack') {
+      const msgpackDecoder = msgpack();
+      return msgpackDecoder.decode(new Uint8Array(response));
     }
+    
 
     return JSON.parse(new TextDecoder().decode(response));
   }
