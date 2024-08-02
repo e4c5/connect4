@@ -7,8 +7,9 @@ from flask import Flask, session, request, jsonify, Response
 from flask_cors import CORS
 from dotenv import load_dotenv
 from connect import Connect4
-from serializers import JsonSerializationStrategy, ProtobufSerializationStrategy, \
-    MessagePackSerializationStrategy, AvroSerializationStrategy
+from decorators import JsonSerializationDecorator, ProtobufSerializationDecorator, \
+    MessagePackSerializationDecorator, AvroSerializationDecorator
+import pickle
 import connect4_pb2
 
 COLUMNS = 7
@@ -57,7 +58,6 @@ def start_game():
 def create_error_response(message):
     response_format = get_response_format()
     error_message = {"message": message}
-
     if response_format == 'protobuf':
         error = connect4_pb2.Error()
         error.message = message
@@ -80,24 +80,23 @@ def create_error_response(message):
         encoder = avro.io.BinaryEncoder(bytes_writer)
         writer.write(error_message, encoder)
         return Response(bytes_writer.getvalue(), status=400, content_type=APPLICATION_X_AVRO)
-
     return jsonify({"error": message}), 400
 
 
 def get_serialized_response(game):
     response_format = get_response_format()
     if response_format == 'protobuf':
-        game.set_serialization_strategy(ProtobufSerializationStrategy())
-        return Response(game.serialize(), content_type=APPLICATION_X_PROTOBUF)
+        decorated_game = ProtobufSerializationDecorator(game)
+        return Response(decorated_game.serialize(), content_type=APPLICATION_X_PROTOBUF)
     elif response_format == 'messagepack':
-        game.set_serialization_strategy(MessagePackSerializationStrategy())
-        return Response(game.serialize(), content_type=APPLICATION_X_MSGPACK)
+        decorated_game = MessagePackSerializationDecorator(game)
+        return Response(decorated_game.serialize(), content_type=APPLICATION_X_MSGPACK)
     elif response_format == 'avro':
-        game.set_serialization_strategy(AvroSerializationStrategy())
-        return Response(game.serialize(), content_type=APPLICATION_X_AVRO)
+        decorated_game = AvroSerializationDecorator(game)
+        return Response(decorated_game.serialize(), content_type=APPLICATION_X_AVRO)
+    decorated_game = JsonSerializationDecorator(game)
+    return Response(decorated_game.serialize(), content_type="application/json")
 
-    game.set_serialization_strategy(JsonSerializationStrategy())
-    return Response(game.serialize(), content_type="application/json")
 
 
 @app.route('/move/', methods=['POST'])

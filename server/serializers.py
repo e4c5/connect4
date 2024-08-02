@@ -5,6 +5,7 @@ import avro.schema
 import avro.io
 import io
 
+
 class SerializationStrategy:
     def serialize(self, game_state):
         """Intended to be overridden by subclasses."""
@@ -25,6 +26,7 @@ class AvroSerializationStrategy(SerializationStrategy):
 class JsonSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         return json.dumps(game_state)
+
 
 class MessagePackSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
