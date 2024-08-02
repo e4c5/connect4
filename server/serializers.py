@@ -49,7 +49,9 @@ class ProtobufSerializationStrategy(SerializationStrategy):
     def serialize(self, game_state):
         state = connect4_pb2.Connect4State()
         for row in game_state['board']:
-            state.board.append(connect4_pb2.Connect4State.Row(row=row))
+            new_row = connect4_pb2.Connect4State.Row()
+            new_row.cols.extend(row)
+            state.board.append(new_row)
 
         state.playing = game_state['playing']
         if 'winner' in game_state:
