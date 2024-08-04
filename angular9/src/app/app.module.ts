@@ -1,5 +1,7 @@
+// src/app/app.module.ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 import { AppComponent } from './app.component';
 
@@ -8,7 +10,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule // Add HttpClientModule to imports array
   ],
   providers: [],
   bootstrap: [AppComponent]

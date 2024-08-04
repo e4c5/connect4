@@ -1,0 +1,12 @@
+This is clearly the naulgar 9 getting started page. I want to get rid of this content and create a simple web page that will hold two buttons. Both buttons will be centered horizontally and vertically. One of the buttons will be start game and another button will be resign game.
+
+So when the start game button is clicked we need to send a get request to http://localhost:5000/start/ method. The response will be a json that looks like this: {"board": [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]], "playing": true}  . the board that to be displayed above the button. The first sub array represents the top row of the board. When the number is 0 and empty cell should be drawn. When the number is 1 a blue circle and when the number is 2 a red circle
+
+How do i Ensure that HttpClientModule is imported in your AppModule to use HttpClient for making HTTP requests.
+
+Now when ever a cell in the table is clicked on by the user, we must call the http://localhost:5000/move/ method. This will be a post request. The data sent will be the column number that was clicked on. The response will be a json similar to the earlier one indicating the new state of the board.
+
+How do i change my code so that cookies are sent with http requests
+-- got filtered out
+
+
