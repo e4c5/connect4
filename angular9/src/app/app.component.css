@@ -1,3 +1,4 @@
+/* src/app/app.component.css */
 .container {
   display: flex;
   flex-direction: column;
@@ -7,40 +8,50 @@
 }
 
 .board {
-  display: flex;
-  flex-direction: column;
+  border-collapse: collapse;
   margin-bottom: 20px;
-}
-
-.row {
-  display: flex;
+  table-layout: fixed; /* Ensure consistent table layout */
 }
 
 .cell {
   width: 50px;
   height: 50px;
-  border: 1px solid #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-width: 50px; /* Ensure cells do not shrink below this size */
+  min-height: 50px; /* Ensure cells do not shrink below this size */
+  border: 1px solid #000; /* Use border for grid lines */
+  box-sizing: border-box; /* Ensure borders are included in the element's total width and height */
+  text-align: center;
+  vertical-align: middle;
+  padding: 0; /* Remove padding to maintain consistent size */
 }
 
 .cell.empty {
   background-color: #fff;
 }
 
+.cell.blue, .cell.red {
+  border-radius: 50%; /* Ensure circles are drawn correctly */
+  width: 40px; /* Adjust width to ensure grid lines are visible */
+  height: 40px; /* Adjust height to ensure grid lines are visible */
+  background-clip: content-box; /* Ensure background color does not overflow the border */
+}
+
 .cell.blue {
   background-color: blue;
-  border-radius: 50%;
 }
 
 .cell.red {
   background-color: red;
-  border-radius: 50%;
 }
 
 button {
   margin: 10px;
   padding: 10px 20px;
   font-size: 16px;
+}
+
+.game-over {
+  margin-top: 20px;
+  font-size: 18px;
+  color: red;
 }

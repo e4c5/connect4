@@ -1,9 +1,13 @@
+<!-- src/app/app.component.html -->
 <div class="container">
-  <div class="board">
-    <div *ngFor="let row of board; let rowIndex = index" class="row">
-      <div *ngFor="let cell of row; let colIndex = index" class="cell" [ngClass]="{'empty': cell === 0, 'blue': cell === 1, 'red': cell === 2}" (click)="makeMove(colIndex)"></div>
-    </div>
-  </div>
+  <table class="board">
+    <tr *ngFor="let row of board; let rowIndex = index">
+      <td *ngFor="let cell of row; let colIndex = index" class="cell" [ngClass]="{'empty': cell === 0, 'blue': cell === 1, 'red': cell === 2}" (click)="makeMove(colIndex)"></td>
+    </tr>
+  </table>
   <button (click)="startGame()">Start Game</button>
   <button (click)="resignGame()">Resign Game</button>
+  <div *ngIf="!playing" class="game-over">
+    Game Over: {{ gameOverMessage }}
+  </div>
 </div>

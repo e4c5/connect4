@@ -9,4 +9,8 @@ Now when ever a cell in the table is clicked on by the user, we must call the ht
 How do i change my code so that cookies are sent with http requests
 -- got filtered out
 
+So when the blue and red circles are drawn the grid lines in the board disappear can that be fixed
+-- many prompts later it was fixed manually
+
+So the game starts off with a board like this: {"board": [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]], "playing": true} but at some point the playing attribute will change to false. THen we need to disable clicking on the cells or alternatively if the cells are clicked on no action should be taken. The text 'game over' should be displayed somewhere. Additionally the json response will contain a message field when the playing state first become false. The content of the message should be displayed with the game over text
 
