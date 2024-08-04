@@ -18,6 +18,7 @@ ROWS = 6
 
 APPLICATION_X_AVRO = 'application/avro'
 APPLICATION_X_MSGPACK = 'application/x-msgpack'
+APPLICATION_MSGPACK = 'application/msgpack'
 APPLICATION_X_PROTOBUF = 'application/x-protobuf'
 
 # Load environment variables from .env file
@@ -32,7 +33,7 @@ def get_response_format():
     accept_header = request.headers.get('Accept', 'application/json')
     if APPLICATION_X_PROTOBUF in accept_header:
         return 'protobuf'
-    elif APPLICATION_X_MSGPACK in accept_header:
+    elif APPLICATION_X_MSGPACK in accept_header or APPLICATION_MSGPACK in accept_header:
         return 'messagepack'
     elif APPLICATION_X_AVRO in accept_header:
         return 'avro'
