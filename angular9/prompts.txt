@@ -14,3 +14,23 @@ So when the blue and red circles are drawn the grid lines in the board disappear
 
 So the game starts off with a board like this: {"board": [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]], "playing": true} but at some point the playing attribute will change to false. THen we need to disable clicking on the cells or alternatively if the cells are clicked on no action should be taken. The text 'game over' should be displayed somewhere. Additionally the json response will contain a message field when the playing state first become false. The content of the message should be displayed with the game over text
 
+So now we need to change tha app so that the page which contains the game may take a query string parameter named 'responseType' This could be one of protobuf, avro or msgpack meaning that the application should send the appropriate accept http header to the backend. If the responseType query string parameter is absent the accept type will be the default json.
+
+Now we need to take into consideration that the various accept types will also result in different content types being sent by the server. In the case of protobuf, the proto file looks like this: syntax = "proto3";
+message Connect4State {
+  repeated Row board = 1 [json_name = "board"];
+  bool playing = 2;
+  int32 winner = 3;
+  string message = 4;
+
+  message Row {
+    repeated int32 cols = 1;
+  }
+}
+message Error {
+  string message = 1;
+}
+
+Now i get a blank page.
+-- things went a bit wonky here. Manual intervention was needed including copying old avro parsing code from the angular 6 app
+
