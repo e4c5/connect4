@@ -1,0 +1,16 @@
+Connect 4 game with multiple frontends
+-
+
+This project was created for teaching puporses and I intend to kill multiple birds with a single stone
+(metaphorically speaking of course, I am a huge fan of wildlife).
+
+One object is to provide several angular code bases that achieve essentially the same objective. That is
+provide a frontend for the connect4 web interface. These will then be used in the study of openrewrite's
+angular migration capabilities or indeed any AI based migration tools available.
+
+Another objective was to teach some of my protege's the art of prompt crafting. Much of the code here was
+created with copilot rather than being written by hand. The promptes are available in the repo itself.
+Sometimes when the project did not give the expected code it was edited manually, at other times i would
+repeatedly tweak the prompt until best results were obtained. Almost always context was used. The most
+relevant files were explicitly added as context.
+
