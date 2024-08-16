@@ -1,3 +1,11 @@
 complete this code
 -- over here i took a different approach from angular 6 or 9 by first adding a lengthy
 -- comment at the top of the main.c file
+
+Lets add support for AVRO
+-- install instructions were wrong. I compiled by clodining https://github.com/apache/avro and
+-- following the INSTALL in lang/c
+
+
+So after installing avro, i get a few errors with the code such as main.c:92:53: error: macro "avro_value_get_size" requires 2 arguments, but only 1 given 92 | size_t n_rows = avro_value_get_size(&board_value); do we have a version compatibility issue?
+

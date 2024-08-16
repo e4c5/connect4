@@ -1,19 +1,3 @@
-/**
- * C web based game client.
- * 
- * This program will accept two arguments the server url and the content type.
- * the content type can be one of json,protobuf,avro and messagePack, if left
- * blank it will default to json.
- * 
- * If the url is not provided the program will exit with an error.
- * 
- * One startup, the app will connect to the url provided over HTTP, it will send
- * the accept http header that tallies with the second argument. It will then
- * parse the response and display a board.
- * 
- * In case of json the response from the server will look like {"board": [ [0,0,0 ..], [0,0,0, ..] .. ] }
- * while the other contents types will have a corresponding structure
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -89,11 +73,13 @@ void parse_avro_response(const char *response, size_t response_size) {
     // Extract and print the board
     avro_value_t board_value;
     avro_value_get_by_name(&value, "board", &board_value, NULL);
-    size_t n_rows = avro_value_get_size(&board_value);
+    size_t n_rows;
+    avro_value_get_size(&board_value, &n_rows);
     for (size_t i = 0; i < n_rows; i++) {
         avro_value_t row_value;
         avro_value_get_by_index(&board_value, i, &row_value, NULL);
-        size_t n_cols = avro_value_get_size(&row_value);
+        size_t n_cols;
+        avro_value_get_size(&row_value, &n_cols);
         for (size_t j = 0; j < n_cols; j++) {
             avro_value_t cell_value;
             avro_value_get_by_index(&row_value, j, &cell_value, NULL);
