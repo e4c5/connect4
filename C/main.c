@@ -152,8 +152,7 @@ int main(int argc, char *argv[]) {
     CURLcode res;
     char response[BUFFER_SIZE] = {0};
     size_t n_cols = 0;
-    struct curl_slist *cookies = NULL;
-    struct curl_slist *nc;
+    struct curl_slist *cookies = NULL;    struct curl_slist *nc;
     char cookie_string[BUFFER_SIZE] = {0};
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -170,6 +169,7 @@ int main(int argc, char *argv[]) {
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, response);
+        curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "");
 
         // Enable verbose output to see headers
         curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
                 printf("Content type %s is not yet supported.\n", content_type);
             }
 
-            // Capture cookies
+            // Capture s
             res = curl_easy_getinfo(curl, CURLINFO_COOKIELIST, &cookies);
             if (res == CURLE_OK && cookies) {
                 printf("Cookies:\n");
